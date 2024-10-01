@@ -29,10 +29,12 @@ kops create cluster --name=srujannalam.xyz \
 
 # One done run below commands to create the cluster 
 
+"""
 kops create -f cluster.yml
 kops update cluster --name srujannalam.xyz --yes --admin
 kops validate cluster --wait 10m
 kops delete -f cluster.yml  --yes
+"""
 
 # Some Smoke Testing to test Our KUBERNETES CLUSTER
 
