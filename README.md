@@ -1,20 +1,23 @@
 # Prod-Grade-Kubernetes-KOPS-Cluster
 Creating a Production Grade Kubernetes cluster with KOPS
 
-Add a DNS NAME using a domain and Route 53 AWS service
-Create a S3 BUCKET with your Domain Name(srujannalam.xyz) 
-IAM ROLE with administrator Access AND ASSIGN IT TO EC2 
-CREATE A EC2 INSTANCE AND GENERATE SSH ROLE
-download Kops and Kubectl to usr/local/bin and change permissions.
+
+- Add a DNS NAME using a domain and Route 53 AWS service
+- Create a S3 BUCKET with your Domain Name(srujannalam.xyz) 
+- IAM ROLE with administrator Access AND ASSIGN IT TO EC2 
+- CREATE A EC2 INSTANCE AND GENERATE SSH ROLE
+- download Kops and Kubectl to usr/local/bin and change permissions.
 
 # Download Kubectl and give permissions.
 # edit .bashrc and add all the env variables 
 
+```
 export NAME=srujannalam.xyz
 export KOPS_STATE_STORE=s3://srujannalam.xyz
 export AWS_REGION=us-east-1
 export CLUSTER_NAME=srujannalam.xyz
 export EDITOR='/usr/bin/nano'
+```
 
 # After copying the above files to .bashrc run “ source .bashrc ”.
 
