@@ -1,0 +1,132 @@
+apiVersion: kops.k8s.io/v1alpha2
+kind: Cluster
+metadata:
+  creationTimestamp: null
+  name: srujannnnalam.xyz
+spec:
+  api:
+    dns: {}
+  authorization:
+    rbac: {}
+  channel: stable
+  cloudProvider: aws
+  configBase: s3://srujannalam.xyz/srujannnnalam.xyz
+  dnsZone: srujannalam.xyz
+  etcdClusters:
+    - cpuRequest: 200m
+      etcdMembers:
+        - encryptedVolume: true
+          instanceGroup: control-plane-us-east-2a
+          name: a
+      manager:
+        backupRetentionDays: 90
+      memoryRequest: 100Mi
+      name: main
+    - cpuRequest: 100m
+      etcdMembers:
+        - encryptedVolume: true
+          instanceGroup: control-plane-us-east-2a
+          name: a
+      manager:
+        backupRetentionDays: 90
+      memoryRequest: 100Mi
+      name: events
+  iam:
+    allowContainerRegistry: true
+    legacy: false
+  kubeProxy:
+    enabled: false
+  kubelet:
+    anonymousAuth: false
+  kubernetesApiAccess:
+    - 0.0.0.0/0
+    - ::/0
+  kubernetesVersion: 1.30.2
+  masterPublicName: api.srujannnnalam.xyz
+  networkCIDR: 172.20.0.0/16
+  networking:
+    cilium:
+      enableNodePort: true
+  nonMasqueradeCIDR: 100.64.0.0/10
+  sshAccess:
+    - 0.0.0.0/0
+    - ::/0
+  subnets:
+    - cidr: 172.20.0.0/17
+      name: us-east-2a
+      type: Public
+      zone: us-east-2a
+    - cidr: 172.20.128.0/17
+      name: us-east-2b
+      type: Public
+      zone: us-east-2b
+  topology:
+    dns:
+      type: Public
+
+---
+apiVersion: kops.k8s.io/v1alpha2
+kind: InstanceGroup
+metadata:
+  creationTimestamp: null
+  labels:
+    kops.k8s.io/cluster: srujannnnalam.xyz
+  name: control-plane-us-east-2a
+spec:
+  image: 099720109477/ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-20240607
+  machineType: t3.medium
+  maxSize: 1
+  minSize: 1
+  role: Master
+  rootVolumeSize: 10
+  subnets:
+    - us-east-2a
+
+---
+apiVersion: kops.k8s.io/v1alpha2
+kind: InstanceGroup
+metadata:
+  creationTimestamp: null
+  labels:
+    kops.k8s.io/cluster: srujannnnalam.xyz
+  name: nodes-us-east-2a
+spec:
+  image: 099720109477/ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-20240607
+  machineType: t3.medium
+  maxSize: 1
+  minSize: 1
+  role: Node
+  rootVolumeSize: 10
+  subnets:
+    - us-east-2a
+
+---
+apiVersion: kops.k8s.io/v1alpha2
+kind: InstanceGroup
+metadata:
+  creationTimestamp: null
+  labels:
+    kops.k8s.io/cluster: srujannnnalam.xyz
+  name: nodes-us-east-2b
+spec:
+  image: 099720109477/ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-20240607
+  machineType: t3.medium
+  maxSize: 1
+  minSize: 1
+  role: Node
+  rootVolumeSize: 10
+  subnets:
+    - us-east-2b
+
+---
+apiVersion: kops.k8s.io/v1alpha2
+kind: SSHCredential
+metadata:
+  creationTimestamp: null
+  labels:
+    kops.k8s.io/cluster: srujannnnalam.xyz
+  name: admin
+spec:
+  publicKey:
+    ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKHwYhJtG8Yk9116YWSXulYhKL85Qv2boHTJmUWNiXBR
+    ubuntu@ip-172-31-28-148
